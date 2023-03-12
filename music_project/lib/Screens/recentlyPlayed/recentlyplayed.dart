@@ -83,7 +83,7 @@ class RecentlyPlayed extends StatelessWidget {
                           top: 122,
                           left: 30,
                           child: Text(
-                            recentName[index].toUpperCase(),
+                            recentName[index].toLowerCase(),
                             style: TextStyle(color: Colors.white),
                           ))
                     ],
