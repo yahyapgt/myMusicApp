@@ -15,11 +15,11 @@ class SettinsPage extends StatefulWidget {
 }
 
 class _SettinsPageState extends State<SettinsPage> {
-  bool valNotifyl = true;
+  bool valNotifyl = false;
 
-  bool valNotify2 = false;
+  bool valNotify2 = true;
 
-  bool valNotifyl3 = false;
+  bool valNotifyl3 = true;
 
   onChangeFunction1(bool newValue1) {
     setState(() {
@@ -129,11 +129,11 @@ class _SettinsPageState extends State<SettinsPage> {
               height: 10,
             ),
             buildNotificationOption(
-                "Theme Dark", valNotifyl, onChangeFunction1),
+                "Notification", valNotifyl, onChangeFunction1),
             buildNotificationOption(
-                "Account Active", valNotify2, onChangeFunction2),
+                "Theme Dark", valNotify2, onChangeFunction2),
             buildNotificationOption(
-                "Opportunity", valNotifyl3, onChangeFunction3),
+                "Account Active", valNotifyl3, onChangeFunction3),
             SizedBox(
               height: 30,
             ),

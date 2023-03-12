@@ -81,10 +81,12 @@ class RecentlyPlayed extends StatelessWidget {
                       ),
                       Positioned(
                           top: 122,
-                          left: 30,
+                          left: 18,
                           child: Text(
-                            recentName[index].toLowerCase(),
-                            style: TextStyle(color: Colors.white),
+                            recentName[index].toUpperCase(),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w100),
                           ))
                     ],
                   ),

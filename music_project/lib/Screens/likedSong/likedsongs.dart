@@ -89,7 +89,9 @@ class LikedSong extends StatelessWidget {
                           left: 50,
                           child: Text(
                             'Believer',
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w100),
                           ))
                     ],
                   ),

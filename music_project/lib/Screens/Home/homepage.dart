@@ -65,6 +65,7 @@ class HomeScreen extends StatelessWidget {
               ),
               ListTile(
                 onTap: () {
+                  Navigator.pop(context);
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -93,7 +94,7 @@ class HomeScreen extends StatelessWidget {
                       ));
                 },
                 leading: Icon(
-                  Icons.playlist_play,
+                  Icons.history_outlined,
                   color: Colors.grey,
                 ),
                 title: Text(
@@ -114,7 +115,7 @@ class HomeScreen extends StatelessWidget {
                       ));
                 },
                 leading: Icon(
-                  Icons.playlist_play,
+                  Icons.featured_play_list,
                   color: Colors.grey,
                 ),
                 title: Text(
@@ -175,7 +176,7 @@ class HomeScreen extends StatelessWidget {
             Container(
               height: MediaQuery.of(context).size.height,
               width: double.infinity,
-              padding: const EdgeInsets.only(left: 22),
+              padding: const EdgeInsets.only(left: 18),
               child: Column(
                 children: [
                   const SizedBox(
@@ -234,13 +235,14 @@ class HomeScreen extends StatelessWidget {
                                           fit: BoxFit.cover,
                                         ),
                                       ),
-                                      const Positioned(
-                                          top: 180,
-                                          left: 50,
+                                      Positioned(
+                                          top: 185,
+                                          left: 25,
                                           child: Text(
-                                            'Moment Apart',
-                                            style:
-                                                TextStyle(color: Colors.white),
+                                            photostName[index].toUpperCase(),
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w100),
                                           ))
                                     ],
                                   ),
@@ -252,7 +254,7 @@ class HomeScreen extends StatelessWidget {
                         separatorBuilder: (context, index) => const SizedBox(
                               width: 15,
                             ),
-                        itemCount: 7),
+                        itemCount: 17),
                   ),
                   const SizedBox(
                     height: 10,
@@ -295,7 +297,7 @@ class HomeScreen extends StatelessWidget {
                                     bottomLeft: Radius.circular(12),
                                   ),
                                 ),
-                                height: height.size.height * .23,
+                                height: height.size.height * .24,
                                 width: height.size.width * .45,
                                 child: Stack(
                                   children: [
@@ -309,12 +311,13 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                     ),
                                     Positioned(
-                                      top: 163,
-                                      left: 50,
-                                      child: Text('Nostalgic',
+                                      top: 165,
+                                      left: 12,
+                                      child: Text(
+                                          playlisttName[index].toUpperCase(),
                                           style:
                                               TextStyle(color: Colors.white)),
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),
@@ -324,24 +327,32 @@ class HomeScreen extends StatelessWidget {
                         separatorBuilder: (context, index) => const SizedBox(
                               width: 15,
                             ),
-                        itemCount: 7),
+                        itemCount: 9),
                   ),
                   Slider(
                     value: 0.0,
                     onChanged: (value) {},
                   ),
                   ListTile(
-                    leading: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(width: .3, color: Colors.white),
-                        color: Colors.red,
-                        image: DecorationImage(
-                            image:
-                                AssetImage('assets/images/mask-group-D1A.png'),
-                            fit: BoxFit.cover),
+                    leading: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PlayinNow(),
+                            ));
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(width: .3, color: Colors.white),
+                          color: Colors.red,
+                          image: DecorationImage(
+                              image: AssetImage('assets/images/chaff&dust.png'),
+                              fit: BoxFit.cover),
+                        ),
+                        width: 50,
+                        height: 60,
                       ),
-                      width: 50,
-                      height: 60,
                     ),
                     title: Text(
                       'Chaff & Dust',

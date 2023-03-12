@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:music_project/constans/color.dart';
 import 'package:music_project/constans/images/images.dart';
 
 class PlayList extends StatelessWidget {
@@ -39,7 +40,10 @@ class PlayList extends StatelessWidget {
             child: ElevatedButton.icon(
                 onPressed: () {},
                 icon: Icon(Icons.add),
-                label: Text('Add New Playlist')),
+                label: Text(
+                  'Add New Playlists',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )),
           ),
           Expanded(
             child: GridView.builder(
@@ -49,13 +53,36 @@ class PlayList extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Container(
                   decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(playPhotos[index]),
-                        fit: BoxFit.cover),
-                    borderRadius: BorderRadius.circular(7),
-                    color: Color.fromARGB(255, 220, 211, 211),
-                  ),
+                      border: Border.all(
+                        width: 2,
+                        color: Colors.white,
+                      ),
+                      // image: DecorationImage(image: AssetImage(photos[index])),
+                      borderRadius: BorderRadius.circular(9),
+                      color: primaryColor),
                   margin: EdgeInsets.all(25),
+                  child: Stack(
+                    children: [
+                      Container(
+                        color: primaryColor,
+                        height: 120,
+                        width: double.infinity,
+                        child: Image.asset(
+                          playPhotos[index],
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Positioned(
+                          top: 122,
+                          left: 7,
+                          child: Text(
+                            playlisttName[index].toUpperCase(),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w100),
+                          ))
+                    ],
+                  ),
                 );
               },
             ),

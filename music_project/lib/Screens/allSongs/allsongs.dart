@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:music_project/Screens/playingNow/playingnow.dart';
 import 'package:music_project/constans/color.dart';
 import 'package:music_project/constans/images/images.dart';
 
@@ -64,36 +65,45 @@ class AllSongs extends StatelessWidget {
               gridDelegate:
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
               itemBuilder: (context, index) {
-                return Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 2,
-                        color: Colors.white,
-                      ),
-                      // image: DecorationImage(image: AssetImage(photos[index])),
-                      borderRadius: BorderRadius.circular(9),
-                      color: primaryColor),
-                  child: Stack(
-                    children: [
-                      Container(
-                        color: primaryColor,
-                        height: 120,
-                        width: double.infinity,
-                        child: Image.asset(
-                          allSongPhotos[index],
-                          fit: BoxFit.cover,
+                return InkWell(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const PlayinNow(),
+                      )),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 2,
+                          color: Colors.white,
                         ),
-                      ),
-                      Positioned(
-                          top: 122,
-                          left: 30,
-                          child: Text(
-                            allSongsName[index].toUpperCase(),
-                            style: TextStyle(color: Colors.white),
-                          ))
-                    ],
+                        // image: DecorationImage(image: AssetImage(photos[index])),
+                        borderRadius: BorderRadius.circular(9),
+                        color: primaryColor),
+                    child: Stack(
+                      children: [
+                        Container(
+                          color: primaryColor,
+                          height: 120,
+                          width: double.infinity,
+                          child: Image.asset(
+                            allSongPhotos[index],
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Positioned(
+                            top: 122,
+                            left: 18,
+                            child: Text(
+                              allSongsName[index].toUpperCase(),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w100),
+                            ))
+                      ],
+                    ),
+                    margin: EdgeInsets.all(25),
                   ),
-                  margin: EdgeInsets.all(25),
                 );
               },
             ),

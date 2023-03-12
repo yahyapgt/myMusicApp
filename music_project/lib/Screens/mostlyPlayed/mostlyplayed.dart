@@ -79,10 +79,12 @@ class MostlyPlayed extends StatelessWidget {
                       ),
                       Positioned(
                           top: 122,
-                          left: 30,
+                          left: 18,
                           child: Text(
                             mostlytName[index].toUpperCase(),
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w100),
                           ))
                     ],
                   ),
