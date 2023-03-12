@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             useMaterial3: true, fontFamily: GoogleFonts.inder().fontFamily),
         debugShowCheckedModeBanner: false,
-        home: const HomeScreen()
+        home: const SplashScreen()
         //HomeScreen(),
         );
   }
