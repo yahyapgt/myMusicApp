@@ -33,7 +33,7 @@ class PrivacyScreen extends StatelessWidget {
           margin: EdgeInsets.all(10),
           child: ListView(
             children: [
-              text_privacy_policy2("Privacy Policy for Elpida Musixcs App", 15),
+              text_privacy_policy2("Privacy Policy for SoundVault App", 15),
               sbox,
               text_privacy_policy(
                   "At My App Musics, we respect your privacy and are committed to protecting your personal data. This Privacy Policy describes how we collect, use, and disclose your information when you use our music app."),

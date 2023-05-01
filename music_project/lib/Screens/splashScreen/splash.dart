@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:music_project/Screens/Home/bottom.dart';
 import 'package:music_project/Screens/Home/homepage.dart';
 import 'package:music_project/constans/color.dart';
 
@@ -47,13 +48,13 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                 ),
                 const SizedBox(height: 15),
-                const Text(
-                  'Music Player',
+                Text(
+                  'SoundVault',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
-                )
+                ),
               ],
             ),
           ),
@@ -68,7 +69,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
+          builder: (context) => HomeScreen(),
         ));
   }
 }

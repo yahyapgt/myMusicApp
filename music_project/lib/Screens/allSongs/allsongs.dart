@@ -1,12 +1,58 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:music_project/Screens/playingNow/playingnow.dart';
-import 'package:music_project/constans/color.dart';
-import 'package:music_project/constans/images/images.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:music_project/Screens/allSongs/allsongslibrary.dart';
+import 'package:music_project/Screens/playingNow/nowplaying.dart';
 
-class AllSongs extends StatelessWidget {
+import 'package:music_project/constans/color.dart';
+
+import 'package:music_project/controller/controls.dart';
+import 'package:music_project/db/Model/favouriteDb.dart';
+import 'package:music_project/db/Model/mostly_db.dart';
+import 'package:music_project/db/Model/recently_db.dart';
+import 'package:on_audio_query/on_audio_query.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+List<SongModel> StartSongs = [];
+
+class AllSongs extends StatefulWidget {
   const AllSongs({super.key});
+
+  @override
+  State<AllSongs> createState() => _AllSongsState();
+}
+
+class _AllSongsState extends State<AllSongs> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    requestPermission();
+  }
+
+ void requestPermission() async {
+    dynamic perm = await _audioQuery.permissionsStatus();
+    if (!perm) {
+      await _audioQuery.permissionsRequest();
+    }
+  }
+
+  final _audioQuery = new OnAudioQuery();
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
+  playSong(String? uri) {
+    try {
+      _audioPlayer.setAudioSource(AudioSource.uri(
+        Uri.parse(uri!),
+      ));
+      _audioPlayer.play();
+    } on Exception {
+      log("Error Parsing Song" as num);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,50 +106,33 @@ class AllSongs extends StatelessWidget {
             height: 20,
           ),
           Expanded(
-            child: GridView.builder(
-              itemCount: 21,
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const PlayinNow(),
-                      )),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 2,
-                          color: Colors.white,
-                        ),
-                        // image: DecorationImage(image: AssetImage(photos[index])),
-                        borderRadius: BorderRadius.circular(9),
-                        color: primaryColor),
-                    child: Stack(
-                      children: [
-                        Container(
-                          color: primaryColor,
-                          height: 120,
-                          width: double.infinity,
-                          child: Image.asset(
-                            allSongPhotos[index],
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Positioned(
-                            top: 122,
-                            left: 18,
-                            child: Text(
-                              allSongsName[index].toUpperCase(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w100),
-                            ))
-                      ],
-                    ),
-                    margin: EdgeInsets.all(25),
-                  ),
+            child: FutureBuilder<List<SongModel>>(
+              future: _audioQuery.querySongs(
+                sortType: null,
+                orderType: OrderType.ASC_OR_SMALLER,
+                uriType: UriType.EXTERNAL,
+                ignoreCase: true,
+              ),
+              builder: (context, item) {
+                final song = item.data;
+
+                if (item.data == null) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (item.data!.isEmpty) {
+                  return Center(
+                    child: Text('No Songs Found'),
+                  );
+                }
+                if (!FavoriteDb.isInitialized) {
+                  FavoriteDb.initialize(item.data!);
+                }
+                StartSongs = item.data!;
+
+              return  AllsongControll(
+                  itemsongs: item.data!,
                 );
               },
             ),

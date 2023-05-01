@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:music_project/Screens/playingNow/nowplaying.dart';
 import 'package:music_project/constans/color.dart';
-import 'package:music_project/constans/images/images.dart';
+
+import 'package:music_project/controller/controls.dart';
+import 'package:music_project/db/Model/favouriteDb.dart';
+import 'package:on_audio_query/on_audio_query.dart';
 
 class LikedSong extends StatelessWidget {
   const LikedSong({super.key});
@@ -59,46 +63,117 @@ class LikedSong extends StatelessWidget {
             height: 20,
           ),
           Expanded(
-            child: GridView.builder(
-              itemCount: 7,
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-              itemBuilder: (context, index) {
-                return Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 2,
-                        color: Colors.white,
-                      ),
-                      // image: DecorationImage(image: AssetImage(photos[index])),
-                      borderRadius: BorderRadius.circular(9),
-                      color: primaryColor),
-                  child: Stack(
-                    children: [
-                      Container(
-                        color: primaryColor,
-                        height: 120,
-                        width: double.infinity,
-                        child: Image.asset(
-                          photos[index],
-                          fit: BoxFit.cover,
+            child: ValueListenableBuilder(
+                valueListenable: FavoriteDb.favoriteSongs,
+                builder:
+                    (context, List<SongModel> favoritedata, Widget? child) {
+                  return GridView.builder(
+                    itemCount: favoritedata.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2),
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 5),
+                        child: InkWell(
+                          onTap: () {
+                        GetAllSongController.audioPlayer
+                                      .setAudioSource(
+                                    GetAllSongController.createSongList(
+                                        favoritedata),
+                                    initialIndex: index,
+                                  );
+
+
+
+
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    NowPlaying(songModel: favoritedata,count: favoritedata.length,)));
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 2,
+                                  color: Colors.white,
+                                ),
+                                // image: DecorationImage(image: AssetImage(photos[index])),
+                                borderRadius: BorderRadius.circular(9),
+                                color: primaryColor),
+                            margin: EdgeInsets.all(10),
+                            child: Stack(
+                              children: [
+                                Container(
+                                  color: primaryColor,
+                                  height: 147,
+                                  width: double.infinity,
+                                  child: QueryArtworkWidget(
+                                    id: favoritedata[index].id,
+                                    type: ArtworkType.AUDIO,
+                                    keepOldArtwork: true,
+                                    artworkBorder: BorderRadius.circular(10),
+                                    artworkHeight:
+                                        MediaQuery.of(context).size.width *
+                                            1 /
+                                            2,
+                                    artworkWidth:
+                                        MediaQuery.of(context).size.width *
+                                            1 /
+                                            2,
+                                    artworkFit: BoxFit.cover,
+                                    nullArtworkWidget: SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.width *
+                                              1 /
+                                              2,
+                                      width: MediaQuery.of(context).size.width *
+                                          1 /
+                                          2,
+                                      child: const Icon(Icons.music_note,
+                                          size: 90,
+                                          color:
+                                              Color.fromARGB(255, 240, 121, 0)),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 150,
+                                  left: 7,
+                                  child: Text(
+                                    favoritedata[index].displayNameWOExt,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w100),
+                                  ),
+                                ),
+                                Positioned(
+                                  left: 125,
+                                  bottom: 125,
+                                  child: IconButton(
+                                    icon: const Icon(
+                                      Icons.favorite,
+                                      color: Color.fromARGB(255, 98, 255, 0),
+                                      size: 30,
+                                    ),
+                                    onPressed: () {
+                                      FavoriteDb.favoriteSongs
+                                          .notifyListeners();
+                                      FavoriteDb.delete(favoritedata[index].id);
+                                      final remove =
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                                  backgroundColor: Colors.red,
+                                                  content: Text("REMOVED")));
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                      const Positioned(
-                          top: 122,
-                          left: 50,
-                          child: Text(
-                            'Believer',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w100),
-                          ))
-                    ],
-                  ),
-                  margin: EdgeInsets.all(25),
-                );
-              },
-            ),
+                      );
+                    },
+                  );
+                }),
           ),
         ],
       ),

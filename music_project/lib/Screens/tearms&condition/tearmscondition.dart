@@ -35,7 +35,7 @@ class TermsScreen extends StatelessWidget {
           child: ListView(
             children: [
               text_privacy_policy2(
-                  "Welcome to the music app! By using the  Elpida  musicx app, you agree to these terms and conditions. Please read them carefully.",
+                  "Welcome to the music app! By using the  SoundVault App, you agree to these terms and conditions. Please read them carefully.",
                   14),
               sbox,
               text_privacy_policy("1.Account Creation and Use:"),

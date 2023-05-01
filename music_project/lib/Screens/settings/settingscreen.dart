@@ -100,7 +100,7 @@ class _SettinsPageState extends State<SettinsPage> {
             buildAccountOption(
                 context, 'Privacy and Secuirity', PrivacyScreen()),
             SizedBox(
-              height: 60,
+              height: 90,
             ),
             Row(
               children: [
@@ -134,26 +134,6 @@ class _SettinsPageState extends State<SettinsPage> {
                 "Theme Dark", valNotify2, onChangeFunction2),
             buildNotificationOption(
                 "Account Active", valNotifyl3, onChangeFunction3),
-            SizedBox(
-              height: 30,
-            ),
-            Center(
-              child: OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 40),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20))),
-                onPressed: () {},
-                child: Text(
-                  'SIGN OUT',
-                  style: TextStyle(
-                    fontSize: 16,
-                    letterSpacing: 2.2,
-                    color: Colors.red,
-                  ),
-                ),
-              ),
-            )
           ],
         ),
       ),

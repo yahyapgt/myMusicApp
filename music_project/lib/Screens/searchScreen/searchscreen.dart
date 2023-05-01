@@ -1,10 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:music_project/Screens/allSongs/allsongslibrary.dart';
 import 'package:music_project/constans/color.dart';
+import 'package:music_project/controller/controls.dart';
+import 'package:on_audio_query/on_audio_query.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
+
+  @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  @override
+  void initState() {
+    songsLoading();
+    super.initState();
+  }
+
+  List<SongModel> allsongs = [];
+  List<SongModel> foundSongs = [];
+  final audioQuery = OnAudioQuery();
+
   Widget _icon_buttom(var _icon) {
     return IconButton(
         onPressed: () {},
@@ -36,10 +55,10 @@ class SearchScreen extends StatelessWidget {
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
-        body: Container(
+        body: SizedBox(
           height: double.infinity,
           width: double.infinity,
-          child: ListView(
+          child: Column(
             children: [
               Center(
                 child: Text(
@@ -55,6 +74,7 @@ class SearchScreen extends StatelessWidget {
                   height: 45,
                   margin: const EdgeInsets.only(left: 20, right: 20),
                   child: TextFormField(
+                      onChanged: (value) => updateList(value),
                       decoration: InputDecoration(
                           suffixIcon: _icon_buttom(Icons.search_rounded),
                           prefixIcon: _icon_buttom(Icons.music_note_outlined),
@@ -67,12 +87,47 @@ class SearchScreen extends StatelessWidget {
                                   width: 5,
                                   color: Colors.white),
                               borderRadius: BorderRadius.circular(50))))
+
                   //  ))),
                   ),
+              Expanded(
+                  child: AllsongControll(
+                itemsongs: foundSongs,
+              ))
             ],
           ),
         ),
       ),
     );
   }
+
+  void songsLoading() async {
+    allsongs = await audioQuery.querySongs(
+      sortType: null,
+      orderType: OrderType.ASC_OR_SMALLER,
+      uriType: UriType.EXTERNAL,
+      ignoreCase: true,
+    );
+    setState(() {
+      foundSongs = allsongs;
+    });
+  }
+
+  void updateList(String enteredText) {
+    List<SongModel> results = [];
+    if (enteredText.isEmpty) {
+      results = allsongs;
+    } else {
+      results = allsongs
+          .where((element) => element.displayNameWOExt
+              .toLowerCase()
+              .trim()
+              .contains(enteredText.toLowerCase().trim()))
+          .toList();
+    }
+    setState(() {
+      foundSongs = results;
+    });
+  }
+ 
 }

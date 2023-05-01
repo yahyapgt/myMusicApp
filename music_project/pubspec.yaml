@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+version: 1.0.0+3
 
 environment:
   sdk: '>=2.19.2 <3.0.0'
@@ -36,8 +36,14 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   google_fonts: ^4.0.3
-  flutter_sticky_widgets: ^0.0.3
-  
+  on_audio_query: ^2.6.2
+  permission_handler: ^10.2.0
+  just_audio: ^0.9.31
+  just_audio_background: ^0.0.1-beta.9
+  hive_flutter: ^1.1.0
+  hive_generator: ^2.0.0
+  text_scroll: ^0.1.2
+  sizer: ^2.0.15
 
 dev_dependencies:
   flutter_test:
@@ -49,6 +55,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  build_runner: ^2.3.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

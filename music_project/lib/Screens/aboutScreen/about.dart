@@ -34,7 +34,7 @@ class AboutScreen extends StatelessWidget {
               sbox2(sheight: 30),
               sbox2(sheight: 4),
               Text(
-                'App Name: MYAPP\n version : 1\n Devoloped by Yahya P',
+                'App Name: SoundVault\n version : 1\n Devoloped by Yahya P',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
